@@ -16,11 +16,13 @@
 		"prefix": "component",
 		"body":[
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-			"<component name=\"${component_name}\" extends=\"Group\">",
+			"<component name=\"${component_name:$TM_FILENAME_BASE}\" extends=\"Group\">",
 			"  <interface>",
+			"  $1",
 			"  </interface>",
-			"  <script type=\"text/brightscript\" uri=\"${component_name}.brs\" />",
+			"  <script type=\"text/brightscript\" uri=\"${component_name:$TM_FILENAME_BASE}.brs\" />",
 			"  <children>",
+			"  $2",
 			"  </children>",
 			"</component>"
 		],
@@ -30,10 +32,11 @@
 		"prefix": "task",
 		"body":[
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-			"<component name=\"${task_name}\" extends=\"Task\">",
+			"<component name=\"${task_name:$TM_FILENAME_BASE}\" extends=\"Task\">",
 			"  <interface>",
+			"  $1",
 			"  </interface>",
-			"  <script type=\"text/brightscript\" uri=\"${task_name}.brs\" />",
+			"  <script type=\"text/brightscript\" uri=\"${task_name:$TM_FILENAME_BASE}.brs\" />",
 			"</component>"
 		],
 		"description": "Create brightscript task"
@@ -45,10 +48,18 @@
 		],
 		"description": "Create script tag in brightscript xml"
 	},
+	"Field":{
+		"prefix": "field",
+		"body":[
+			"<field id=\"${field_id}\" type=\"${field_id}\" />",
+		],
+		"description": "Create field tag in brightscript xml"
+	},
 	"Interface":{
 		"prefix": "interface",
 		"body":[
 			"<interface>",
+			"  $1",
 			"</interface>",
 		],
 		"description": "Create interface tag in brightscript xml"
@@ -58,6 +69,7 @@
 		"body": [
 			"function OnkeyEvent(key as String, press as Boolean) as Boolean",
 			"  handled = false",
+			"  $1",
 			" return handled",
 			"end function",
 		],
