@@ -1,0 +1,59 @@
+{
+	// Place your snippets for brightscript here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Main":{
+		"prefix": "main",
+		"body":[
+
+		],
+		"description": "Create brightscript main function"
+	},
+	"Sub":{
+		"prefix":"sub",
+		"body":[
+			"sub ${function_name}",
+			"end sub",
+		],
+		"description": "Create brightscript sub"
+	},
+	"Function":{
+		"prefix": "function",
+		"body":[
+			"function ${function_name}() as ${return_type}",
+			"end function"
+		]
+	},
+	"RegWrite":{
+		"prefix": "regwrite",
+		"body": [
+			"function RegWrite(key As String, val As String, section As String)",
+			"  sec = CreateObject(\"roRegistrySection\", section)",
+			"  sec.Write(key, val)",
+			"  sec.Flush() 'commit it",
+			"end function"
+		],
+		"description": "Create RegWrite function"
+	},
+	"RegRead":{
+		"prefix": "regread",
+		"body":[
+			"function RegRead(key As String, section As String)",
+			"  sec = CreateObject(\"roRegistrySection\", section)",
+			"  if sec.Exists(key) then return sec.Read(key)",
+			"  return invalid",
+		  	"end function",
+		]
+	}
+	
+}
