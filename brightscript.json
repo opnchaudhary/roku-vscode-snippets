@@ -23,6 +23,7 @@
 		"prefix":"sub",
 		"body":[
 			"sub ${function_name}",
+			"  $1",
 			"end sub",
 		],
 		"description": "Create brightscript sub"
@@ -31,6 +32,7 @@
 		"prefix": "function",
 		"body":[
 			"function ${function_name}() as ${return_type}",
+			"  $1",
 			"end function"
 		]
 	},
@@ -53,7 +55,31 @@
 			"  if sec.Exists(key) then return sec.Read(key)",
 			"  return invalid",
 		  	"end function",
-		]
+		],
+		"description": "Create RegRead function"
+	},
+	"For":{
+		"prefix": "for",
+		"body":[
+			"for each ${item} in ${list}",
+			"  $1",
+			"end for"
+		],
+		"description": "Create for loop"
+	},
+	"Object":{
+		"prefix": "obj",
+		"body":[
+			"${object_variable} = CreateObject(\"${object_type}\")"
+		],
+		"description": "Create brightscript Object"
+	},
+	"Node":{
+		"prefix": "node",
+		"body": [
+			"${node_variable} = CreateObject(\"roSGNode\", \"${ContentNode}\")"
+		],
+		"description": "Create brightscript node"
 	}
 	
 }
