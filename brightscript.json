@@ -1,38 +1,82 @@
 {
-	// Place your snippets for brightscript here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
 	"Main":{
 		"prefix": "main",
 		"body":[
-
+			"sub Main(args as Object)",
+			"  showChannelSGScreen(args)",
+			"end sub",
+			"",
+			"sub showChannelSGScreen(args as Object)",
+			"  screen = CreateObject(\"roSGScreen\")",
+			"  m.port = CreateObject(\"roMessagePort\")",
+			"  screen.setMessagePort(m.port)",
+			"  scene = screen.CreateScene(\"${scene_name:MainScene}\")",
+			"  screen.show()",
+			"",
+			"  while(true)",
+			"    msg = wait(0, m.port)",
+			"    msgType = type(msg)",
+			"    if msgType = \"roSGScreenEvent\"",
+			"      if msg.isScreenClosed() then return",
+			"    end if",
+			"  end while",
+			"end sub"
 		],
 		"description": "Create brightscript main function"
+	},
+	"Manifest":{
+		"prefix":"manifest",
+		"body":[
+			"##   Channel Details",
+			"title=${channel_name}",
+			"major_version=1",
+			"minor_version=0",
+			"build_version=00001",
+			"",
+			"##   Channel Assets",
+			"###  Main Menu Icons / Channel Poster Artwork ",
+			"#### Image sizes are FHD: 540x405px | HD: 290x218px | SD: 214x144px",
+			"mm_icon_focus_fhd=pkg:/images/channel-poster_fhd.png",
+			"mm_icon_focus_hd=pkg:/images/channel-poster_hd.png",
+			"mm_icon_focus_sd=pkg:/images/channel-poster_sd.png",
+			"",
+			"###  Splash Screen + Loading Screen Artwork ",
+			"#### Image sizes are FHD: 1920x1080px | HD: 1280x720px | SD: 720x480px",
+			"splash_screen_fhd=pkg:/images/splash-screen_fhd.jpg",
+			"splash_screen_hd=pkg:/images/splash-screen_hd.jpg",
+			"splash_screen_sd=pkg:/images/splash-screen_sd.jpg",
+			"",
+			"splash_color=#000000",
+			"splash_min_time=1",
+			"ui_resolutions=fhd",
+			"",
+			"supports_input_launch=1",
+			"requires_widevine_drm=1",
+			"requires_widevine_version=1.0",
+			"",
+			"confirm_partner_button=1",
+			"",
+			"bs_libs_required=roku_ads_lib",
+			"sg_component_libs_required=Roku_Analytics"
+		],
+		"description": "Create manifest file"
 	},
 	"Sub":{
 		"prefix":"sub",
 		"body":[
-			"sub ${function_name}",
+			"sub ${function_name}(${params})",
+			" ?\"[$TM_FILENAME_BASE] [$function_name]\"",
 			"  $1",
 			"end sub",
 		],
 		"description": "Create brightscript sub"
 	},
 	"Function":{
-		"prefix": "function",
+		"prefix": "fun",
 		"body":[
-			"function ${function_name}() as ${return_type}",
-			"  $1",
+			"function ${function_name}(${params}) as ${return_type}",
+			" ?\"[$TM_FILENAME_BASE] [$function_name]\"",
+			"  $0",
 			"end function"
 		]
 	},
@@ -67,7 +111,7 @@
 		],
 		"description": "Create for loop"
 	},
-	"Object":{
+	"CreateObject":{
 		"prefix": "obj",
 		"body":[
 			"${object_variable} = CreateObject(\"${object_type}\")"
@@ -80,6 +124,67 @@
 			"${node_variable} = CreateObject(\"roSGNode\", \"${ContentNode}\")"
 		],
 		"description": "Create brightscript node"
+	},
+	"OnKeyEvent":{
+		"prefix": "onkeyevent",
+		"body": [
+			"function OnkeyEvent(key as String, press as Boolean) as Boolean",
+			"  handled = false",
+			"  $1",
+			" return handled",
+			"end function",
+		],
+		"description": "Create OnKeyEvent function"
+	},
+	"If": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition}",
+            "\t$0",
+            "end if"
+        ],
+        "description": "Simple if statement"
+    },
+
+    "If Else": {
+        "prefix": "if-else",
+        "body": [
+            "if ${1:condition}",
+            "  $0",
+            "else",
+            "  ",
+            "end if"
+        ],
+        "description": "Simple if/else statement"
+	},
+	"Theme":{
+		"prefix": "theme",
+		"body":[
+			"function getTheme() as Dynamic",
+			"  theme = {}",
+			"  theme.borderColor = \"0xb5dce9\"",
+			"  theme.primaryTextColor = \"0x212121\"",
+			"  theme.primaryButtonColor = \"0xe50914FF\"",
+			"  theme.secondaryButtonColor = \"0x212121\"",
+			"  return theme",
+		  	"end function"
+		]
+	},
+	"Initiate Theme":{
+		"prefix": "theme-init",
+		"body": [
+			"m.global = screen.getGlobalNode()",
+			"m.global.id = \"GlobalNode\"",
+			"m.global.addFields( { theme: getTheme() } )"
+		],
+		"description": "initiate theme"
+	},
+	"Comment":{
+		"prefix": "comment",
+		"body": [
+			"?\"[$TM_FILENAME_BASE] [$1]\""
+		],
+		"description": "Create Comment"
 	}
 	
 }
